@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">CodeChallenge</string>
+    <string name="action_settings">Settings</string>
+    <string name="define_palindrome_txt">Palindrom eingeben</string>
+    <string name="ok_btn">OK</string>
+</resources>
