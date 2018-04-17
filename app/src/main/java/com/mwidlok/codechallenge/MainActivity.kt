@@ -3,10 +3,12 @@ package com.mwidlok.codechallenge
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,9 +17,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        btnOk.setOnClickListener {
+            Log.i("CodeChallenge","button clicked")
+            searchForPalindroms(txtPalindrom.text.toString())
         }
     }
 
@@ -35,5 +37,30 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun searchForPalindroms(textInput : String)
+    {
+        // seperate the words
+
+        var words = textInput.split(" ")
+        var amountPalindroms = 0
+        var palindromeString:String = ""
+
+        for (word in words)
+        {
+            // check every single word if it`s a palindrome.
+            var revWord = word.reversed()
+            Log.i("Challenge","Reversed string is $revWord")
+            for (word in words)
+                if (revWord == word)
+                {
+                    palindromeString += revWord + ","
+                    amountPalindroms++
+                }
+
+        }
+
+        tvResult.text = "$amountPalindroms palindroms found. $palindromeString"
     }
 }
