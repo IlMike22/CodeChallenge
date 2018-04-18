@@ -3,9 +3,11 @@ package com.mwidlok.codechallenge
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity() {
             Log.i("CodeChallenge", "button clicked")
             checkStringForPalindromes(txtPalindrom.text.toString())
         }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -39,9 +43,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun checkStringForPalindromes(textInput: String) {
-        // all palindorms includingsabc substrings should be detected
+        // all palindroms including substrings should be detected
         // example: sabcbakd -> abcba is a palindrome
+        // to fix: sddstets returns sdds pal, although there is stets which is longer.
         // even spaces can be a palindrome, you should check substrings with at least 4 chars
 
         var output: String = ""
@@ -64,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                         if (isPalindrome)
                         {
                             Log.i("cc","pal found ${textInput.substring(indexLeft,indexRight)}")
-                            output += textInput.substring(indexLeft,indexRight)
+                            output = textInput.substring(indexLeft,indexRight)
                         }
                     }
                 }
@@ -72,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             Log.i("cc", leftSideLetter.toString())
-            tvResult.text = "Palindroms: $output"
+            tvResult.text = "Palindrom: $output"
         }
     }
 
@@ -89,26 +95,5 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
-
-//        var words = textInput.split(" ")
-//        var amountPalindroms = 0
-//        var palindromeString:String = ""
-//
-//        for (word in words)
-//        {
-//            // check every single word if it`s a palindrome.
-//            var revWord = word.reversed()
-//            Log.i("Challenge","Reversed string is $revWord")
-//            for (word in words)
-//                if (revWord == word)
-//                {
-//                    palindromeString += revWord + ","
-//                    amountPalindroms++
-//                }
-//
-//        }
-//
-//
 
 }
