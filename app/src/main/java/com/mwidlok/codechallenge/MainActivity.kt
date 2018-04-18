@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         btnOk.setOnClickListener {
-            Log.i("CodeChallenge","button clicked")
-            searchForPalindroms(txtPalindrom.text.toString())
+            Log.i("CodeChallenge", "button clicked")
+            checkStringForPalindromes(txtPalindrom.text.toString())
         }
     }
 
@@ -39,28 +39,76 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun searchForPalindroms(textInput : String)
-    {
-        // seperate the words
+    private fun checkStringForPalindromes(textInput: String) {
+        // all palindorms includingsabc substrings should be detected
+        // example: sabcbakd -> abcba is a palindrome
+        // even spaces can be a palindrome, you should check substrings with at least 4 chars
 
-        var words = textInput.split(" ")
-        var amountPalindroms = 0
-        var palindromeString:String = ""
+        var output: String = ""
+        var indexLeft = 0
+        for (leftSideLetter in textInput) {
+            var indexRight = textInput.length
 
-        for (word in words)
-        {
-            // check every single word if it`s a palindrome.
-            var revWord = word.reversed()
-            Log.i("Challenge","Reversed string is $revWord")
-            for (word in words)
-                if (revWord == word)
-                {
-                    palindromeString += revWord + ","
-                    amountPalindroms++
+            indexLeft = textInput.indexOf(leftSideLetter)
+            Log.i("cc", "left index is $indexLeft")
+            while (indexLeft != indexRight) {
+                Log.i("cc", "right index is $indexRight")
+                if (leftSideLetter == textInput[indexRight - 1]) {
+                    // found same char in string
+                    Log.i("cc","check string ${textInput.substring(indexLeft,indexRight)}")
+                    var paldrSuspicion = textInput.substring(indexLeft, indexRight)
+
+                    if (paldrSuspicion.length > 2)
+                    {
+                        var isPalindrome = checkForPalindrome(textInput.substring(indexLeft, indexRight))
+                        if (isPalindrome)
+                        {
+                            Log.i("cc","pal found ${textInput.substring(indexLeft,indexRight)}")
+                            output += textInput.substring(indexLeft,indexRight)
+                        }
+                    }
                 }
+                indexRight--
+            }
 
+            Log.i("cc", leftSideLetter.toString())
+            tvResult.text = "Palindroms: $output"
         }
-
-        tvResult.text = "$amountPalindroms palindroms found. $palindromeString"
     }
+
+
+    private fun checkForPalindrome(value: String):Boolean {
+        var i = value.length-1
+        for (letter in value)
+        {
+            if (value[i] != letter) // last index vs first index
+                return false
+            else
+                if (i > 0)
+                    i--
+        }
+        return true
+    }
+
+
+//        var words = textInput.split(" ")
+//        var amountPalindroms = 0
+//        var palindromeString:String = ""
+//
+//        for (word in words)
+//        {
+//            // check every single word if it`s a palindrome.
+//            var revWord = word.reversed()
+//            Log.i("Challenge","Reversed string is $revWord")
+//            for (word in words)
+//                if (revWord == word)
+//                {
+//                    palindromeString += revWord + ","
+//                    amountPalindroms++
+//                }
+//
+//        }
+//
+//
+
 }
